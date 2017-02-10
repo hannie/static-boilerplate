@@ -1,5 +1,6 @@
 var gulp = require('gulp'),
     sass = require('gulp-sass'),
+    bulkSass = require('gulp-sass-glob-import'),
     browserSync = require('browser-sync'),
     autoprefixer = require('gulp-autoprefixer'),
     rename = require('gulp-rename'),
@@ -11,6 +12,7 @@ var gulp = require('gulp'),
 gulp.task('css', function (cb) {
   pump([
       gulp.src('src/assets/css/main.scss'),
+      bulkSass(),
       sass(),
       autoprefixer('last 4 version'),
       gulp.dest('app/assets/css'),
@@ -67,7 +69,7 @@ gulp.task('bs-reload', function () {
 });
 
 gulp.task('default', ['css', 'jsConcat', 'html', 'img', 'browser-sync'], function () {
-    gulp.watch('src/assets/css/*.scss', ['css']);
+    gulp.watch('src/assets/css/**/*.scss', ['css']);
     gulp.watch('src/assets/js/app.js', ['jsConcat']);
     gulp.watch('src/*.html', ['html']);
     gulp.watch('src/assets/img/**/*', ['img']);
